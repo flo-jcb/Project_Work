@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/mbclient.dir/mbclient.c.o -o ../../../../mbclient  -Wl,-rpath,"\$ORIGIN" ../../../../libmodbus.so.0.4.9 

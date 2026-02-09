@@ -1,0 +1,1 @@
+/usr/bin/cc CMakeFiles/mbserver.dir/mbserver.c.o -o ../../../../mbserver  -Wl,-rpath,"\$ORIGIN" ../../../../libmodbus.so.0.4.9 
