@@ -3,7 +3,7 @@
 #include <ModbusServerPort.h>
 #include <iostream>
 
-void main()
+int main()
 {   Modbus::TcpSettings settings;
     settings.host = "EM-347B";
     settings.port = Modbus::STANDARD_TCP_PORT;
@@ -23,6 +23,6 @@ void main()
         s4 = c4.readHoldingRegisters(0, 10, regs4);
         Modbus::msleep(1);
     }
-
+    return 0;
 }
 

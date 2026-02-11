@@ -8,10 +8,8 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
   /home/flo_virt/projet/external/ModbusLib/src/ModbusGlobal.h \
   /home/flo_virt/projet/external/ModbusLib/src/ModbusObject.h \
   /home/flo_virt/projet/external/ModbusLib/src/ModbusPlatform.h \
-  /home/flo_virt/projet/external/ModbusLib/src/ModbusPort.h \
-  /home/flo_virt/projet/external/ModbusLib/src/ModbusTcpPort.h \
+  /home/flo_virt/projet/external/ModbusLib/src/ModbusServerPort.h \
   /home/flo_virt/projet/external/ModbusLib/src/Modbus_config.h \
-  /home/flo_virt/projet/src/motor_control/modbus_interface.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/errno-base.h \
   /usr/include/asm-generic/errno.h \
@@ -80,6 +78,7 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
   /usr/include/c++/13/cstddef \
   /usr/include/c++/13/cstdio \
   /usr/include/c++/13/cstdlib \
+  /usr/include/c++/13/cstring \
   /usr/include/c++/13/cwchar \
   /usr/include/c++/13/cwctype \
   /usr/include/c++/13/debug/assertions.h \
@@ -214,6 +213,8 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
+/usr/include/x86_64-linux-gnu/sys/cdefs.h:
+
 /usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
@@ -302,7 +303,7 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/x86_64-linux-gnu/bits/cpu-set.h:
 
-/usr/include/x86_64-linux-gnu/bits/byteswap.h:
+/usr/include/c++/13/bits/stl_construct.h:
 
 /usr/include/c++/13/bits/stl_algobase.h:
 
@@ -330,12 +331,6 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/ctype.h:
 
-/home/flo_virt/projet/external/ModbusLib/src/ModbusClient.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
-
-/usr/include/c++/13/bits/char_traits.h:
-
 /usr/include/c++/13/bits/ostream.tcc:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
@@ -356,9 +351,19 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/wchar.h:
 
-/usr/include/c++/13/bits/istream.tcc:
+/usr/include/c++/13/cwctype:
 
-/usr/include/c++/13/bits/exception_ptr.h:
+/usr/include/c++/13/cwchar:
+
+/usr/include/alloca.h:
+
+/usr/include/c++/13/iosfwd:
+
+/usr/include/c++/13/bits/predefined_ops.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h:
+
+/home/flo_virt/projet/external/ModbusLib/src/Modbus_config.h:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
@@ -368,21 +373,9 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/c++/13/bits/exception.h:
 
-/usr/include/alloca.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h:
-
-/home/flo_virt/projet/external/ModbusLib/src/Modbus_config.h:
-
-/home/flo_virt/projet/src/motor_control/modbus_interface.hpp:
-
-/usr/include/x86_64-linux-gnu/sys/cdefs.h:
-
-/home/flo_virt/projet/external/ModbusLib/src/ModbusPort.h:
-
-/usr/include/sched.h:
-
 /home/flo_virt/projet/external/ModbusLib/src/ModbusPlatform.h:
+
+/usr/include/c++/13/bits/move.h:
 
 /usr/include/c++/13/bits/basic_string.tcc:
 
@@ -390,9 +383,9 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
 
-/usr/include/c++/13/bits/stl_pair.h:
-
 /usr/include/c++/13/cstdio:
+
+/usr/include/c++/13/bits/stl_pair.h:
 
 /usr/include/c++/13/bits/charconv.h:
 
@@ -402,7 +395,15 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/c++/13/ios:
 
-/home/flo_virt/projet/external/ModbusLib/src/ModbusTcpPort.h:
+/home/flo_virt/projet/external/ModbusLib/src/ModbusClient.h:
+
+/usr/include/c++/13/bits/exception_ptr.h:
+
+/usr/include/c++/13/bits/istream.tcc:
+
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
+/usr/include/c++/13/bits/char_traits.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
 
@@ -412,21 +413,13 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/c++/13/bits/concept_check.h:
 
-/usr/include/c++/13/bits/move.h:
-
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
 /usr/include/c++/13/bits/cpp_type_traits.h:
 
-/usr/include/c++/13/cwctype:
-
-/usr/include/c++/13/bits/predefined_ops.h:
-
-/usr/include/c++/13/iosfwd:
-
-/usr/include/c++/13/cwchar:
+/home/flo_virt/projet/external/ModbusLib/src/ModbusServerPort.h:
 
 /home/flo_virt/projet/src/motor_control/main.cpp:
 
@@ -482,8 +475,6 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/stdio.h:
 
-/usr/include/c++/13/bits/stl_construct.h:
-
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/c++/13/bits/functexcept.h:
@@ -525,6 +516,8 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 /usr/include/c++/13/cstddef:
 
 /usr/include/c++/13/cstdlib:
+
+/usr/include/c++/13/cstring:
 
 /usr/include/c++/13/bits/stl_list.h:
 
@@ -606,6 +599,8 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 
 /usr/include/pthread.h:
 
+/usr/include/sched.h:
+
 /usr/include/stdint.h:
 
 /usr/include/stdlib.h:
@@ -623,3 +618,5 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: /home/flo_virt/projet/src/moto
 /usr/include/wctype.h:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/x86_64-linux-gnu/bits/byteswap.h:

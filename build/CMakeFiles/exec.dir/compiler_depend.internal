@@ -9,10 +9,8 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o
  /home/flo_virt/projet/external/ModbusLib/src/ModbusGlobal.h
  /home/flo_virt/projet/external/ModbusLib/src/ModbusObject.h
  /home/flo_virt/projet/external/ModbusLib/src/ModbusPlatform.h
- /home/flo_virt/projet/external/ModbusLib/src/ModbusPort.h
- /home/flo_virt/projet/external/ModbusLib/src/ModbusTcpPort.h
+ /home/flo_virt/projet/external/ModbusLib/src/ModbusServerPort.h
  /home/flo_virt/projet/external/ModbusLib/src/Modbus_config.h
- /home/flo_virt/projet/src/motor_control/modbus_interface.hpp
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h
  /usr/include/asm-generic/errno.h
@@ -81,6 +79,7 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o
  /usr/include/c++/13/cstddef
  /usr/include/c++/13/cstdio
  /usr/include/c++/13/cstdlib
+ /usr/include/c++/13/cstring
  /usr/include/c++/13/cwchar
  /usr/include/c++/13/cwctype
  /usr/include/c++/13/debug/assertions.h

@@ -1,8 +1,7 @@
 CMakeFiles/exec.dir/src/motor_control/main.cpp.o: \
  /home/flo_virt/projet/src/motor_control/main.cpp \
  /usr/include/stdc-predef.h \
- /home/flo_virt/projet/src/motor_control/modbus_interface.hpp \
- /home/flo_virt/projet/external/ModbusLib/src/ModbusClient.h \
+ /home/flo_virt/projet/external/ModbusLib/src/ModbusClientPort.h \
  /home/flo_virt/projet/external/ModbusLib/src/ModbusObject.h \
  /home/flo_virt/projet/external/ModbusLib/src/Modbus.h \
  /usr/include/c++/13/string /usr/include/c++/13/bits/requires_hosted.h \
@@ -130,12 +129,11 @@ CMakeFiles/exec.dir/src/motor_control/main.cpp.o: \
  /usr/include/strings.h \
  /home/flo_virt/projet/external/ModbusLib/src/ModbusPlatform.h \
  /home/flo_virt/projet/external/ModbusLib/src/Modbus_config.h \
- /home/flo_virt/projet/external/ModbusLib/src/ModbusTcpPort.h \
- /home/flo_virt/projet/external/ModbusLib/src/ModbusPort.h \
- /home/flo_virt/projet/external/ModbusLib/src/ModbusClientPort.h \
- /usr/include/c++/13/iostream /usr/include/c++/13/ostream \
- /usr/include/c++/13/ios /usr/include/c++/13/exception \
- /usr/include/c++/13/bits/exception_ptr.h \
+ /home/flo_virt/projet/external/ModbusLib/src/ModbusClient.h \
+ /home/flo_virt/projet/external/ModbusLib/src/ModbusServerPort.h \
+ /usr/include/c++/13/cstring /usr/include/c++/13/iostream \
+ /usr/include/c++/13/ostream /usr/include/c++/13/ios \
+ /usr/include/c++/13/exception /usr/include/c++/13/bits/exception_ptr.h \
  /usr/include/c++/13/bits/cxxabi_init_exception.h \
  /usr/include/c++/13/typeinfo /usr/include/c++/13/bits/nested_exception.h \
  /usr/include/c++/13/bits/ios_base.h /usr/include/c++/13/ext/atomicity.h \
