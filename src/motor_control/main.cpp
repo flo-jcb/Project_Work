@@ -1,4 +1,4 @@
-#include <ModbusClientPort.h>
+/*#include <ModbusClientPort.h>
 #include <ModbusClient.h>
 #include <ModbusServerPort.h>
 #include <iostream>
@@ -24,5 +24,38 @@ int main()
         Modbus::msleep(1);
     }
     return 0;
-}
+}*/
 
+#include "ModbusClient.h"
+#include <iostream>
+
+int main()
+{
+    Modbus::SerialSettings settings;
+
+    settings.portName = "/dev/ttyACM0";   // Pico vu comme port USB
+    settings.baudRate = 19200;
+    settings.parity = Modbus::EvenParity;
+    settings.dataBits = 8;
+    settings.timeoutInterByte = 1000;
+
+    ModbusClientPort* port =
+        Modbus::createClientPort(Modbus::RTU, &settings, true);
+
+    ModbusClient motor(1, port);   // Slave ID = 1 (EM347)
+
+    uint16_t value;
+
+    // Activer le bus
+    motor.writeSingleRegister(0, 1);   // 40001
+
+    // Régler la vitesse
+   // motor.writeSingleRegister(1, 500); // 40002
+
+    // Lire vitesse réelle (exemple registre 10)
+    motor.readHoldingRegisters(10, 0, &value);
+
+    std::cout << "Feedback : " << value << std::endl;
+
+    return 0;
+}
