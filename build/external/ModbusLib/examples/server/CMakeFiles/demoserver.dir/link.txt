@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/demoserver.dir/demoserver.cpp.o -o ../../../../demoserver  -Wl,-rpath,"\$ORIGIN" ../../../../libmodbus.so.0.4.9 
