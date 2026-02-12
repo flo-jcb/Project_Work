@@ -1,0 +1,3 @@
+[submodule "external/ModbusLib"]
+	path = external/ModbusLib
+	url = https://github.com/serhmarch/ModbusLib.git
