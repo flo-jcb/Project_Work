@@ -44,18 +44,18 @@ int main()
 
     ModbusClient motor(1, port);   // Slave ID = 1 (EM347)
 
-    uint16_t value;
+    //uint16_t value;
 
     // Activer le bus
-    motor.writeSingleRegister(0, 1);   // 40001
+    //motor.writeSingleRegister(0, 1);   // 40001
 
     // Régler la vitesse
    // motor.writeSingleRegister(1, 500); // 40002
 
     // Lire vitesse réelle (exemple registre 10)
-    motor.readHoldingRegisters(10, 0, &value);
+    //motor.readHoldingRegisters(10, 0, &value);
 
-    std::cout << "Feedback : " << value << std::endl;
+    std::cout << "Feedback : " /*<< value*/ << std::endl;
 
     return 0;
 }
