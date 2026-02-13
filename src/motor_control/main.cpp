@@ -33,7 +33,7 @@ int main()
 {
     Modbus::SerialSettings settings;
 
-    settings.portName = "/dev/ttyACM0";   // Pico vu comme port USB
+    settings.portName = "/dev/ttyUSB0";   // Pico vu comme port USB
     settings.baudRate = 19200;
     settings.parity = Modbus::EvenParity;
     settings.dataBits = 8;
