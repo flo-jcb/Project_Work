@@ -53,9 +53,17 @@ int main()
    // motor.writeSingleRegister(1, 500); // 40002
 
     // Lire vitesse réelle (exemple registre 10)
-    motor.readHoldingRegisters(10, 0, &value);
 
-    std::cout << "Feedback : " << value << std::endl;
+    Modbus::StatusCode status = motor.readHoldingRegisters(10, 0, &value);
+    if (Modbus::StatusIsGood(status))
+    {
+           
+
+            std::cout << "Feedback : " << value << std::endl;
+
+    }
+    else
+        std::cout << "Error " << '\n';
 
     return 0;
 }
