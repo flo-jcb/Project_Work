@@ -54,16 +54,17 @@ int main()
 
     // Lire vitesse réelle (exemple registre 10)
 
-    Modbus::StatusCode status = motor.readHoldingRegisters(10, 0, &value);
+    Modbus::StatusCode status = motor.readHoldingRegisters(10, 1, &value);
+
     if (Modbus::StatusIsGood(status))
     {
-           
-
-            std::cout << "Feedback : " << value << std::endl;
-
+        std::cout << "Feedback : " << value << std::endl;
     }
     else
-        std::cout << "Error " << '\n';
+    {
+        std::cout << "Error code: " << status << std::endl;
+    }
+
 
     return 0;
 }
