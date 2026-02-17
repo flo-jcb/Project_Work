@@ -19,20 +19,27 @@ int main()
         return -1;
     }
     else std::cout << "Port created" << std::endl;
+    
+    ModbusClient motor(1, port); // Slave ID 1
 
-    //ModbusClient motor(1, port);
+    uint16_t value;
 
-    //uint16_t value;
-
-    /*Modbus::StatusCode status =
-        motor.readHoldingRegisters(11, 1, &value);
+    // Lire registre 4
+    Modbus::StatusCode status =
+        motor.readHoldingRegisters(4, 1, &value);
 
     if (Modbus::StatusIsGood(status))
-        std::cout << "OK: " << value << std::endl;
+        std::cout << "Reg 11 = " << value << std::endl;
     else
-        std::cout << "Error: " << status << std::endl;*/
+        std::cout << "Erreur lecture : " << status << std::endl;
 
+    // Ecrire registre 1 (exemple)
+    /*status = motor.writeSingleRegister(1, 100);
 
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Ecriture OK" << std::endl;
+    else
+        std::cout << "Erreur ecriture : " << status << std::endl;*/
 
     return 0;
 }
