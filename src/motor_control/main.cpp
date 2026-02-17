@@ -5,7 +5,7 @@ int main()
 {
     Modbus::SerialSettings settings;
 
-    settings.portName = "/dev/serial0";   // Pico vu comme port USB
+    settings.portName = "/dev/AMA0";   // Pico vu comme port USB
     settings.baudRate = 19200;
     settings.parity = Modbus::EvenParity;
     settings.dataBits = 8;
