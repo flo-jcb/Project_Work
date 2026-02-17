@@ -18,18 +18,19 @@ int main()
         std::cout << "Port creation failed" << std::endl;
         return -1;
     }
+    else std::cout << "Port created" << std::endl;
 
-    ModbusClient motor(1, port);
+    //ModbusClient motor(1, port);
 
-    uint16_t value;
+    //uint16_t value;
 
-    Modbus::StatusCode status =
+    /*Modbus::StatusCode status =
         motor.readHoldingRegisters(11, 1, &value);
 
     if (Modbus::StatusIsGood(status))
         std::cout << "OK: " << value << std::endl;
     else
-        std::cout << "Error: " << status << std::endl;
+        std::cout << "Error: " << status << std::endl;*/
 
 
 
