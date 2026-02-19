@@ -9,6 +9,7 @@ int main()
     settings.baudRate = 19200;
     settings.parity = Modbus::EvenParity;
     settings.dataBits = 8;
+    settings.timeoutInterByte=1000;
 
     ModbusClientPort* port =
         Modbus::createClientPort(Modbus::RTU, &settings, true);
@@ -64,6 +65,8 @@ int main()
             std::cout << "Fréquence actuel = " << value << std::endl;
         else
             std::cout << "Erreur lecture " << status << std::endl;
+
+        
     }
 
     return 0;
