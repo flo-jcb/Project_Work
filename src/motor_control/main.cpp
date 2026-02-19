@@ -56,5 +56,12 @@ int main()
     else
         std::cout << "Erreur lecture " << status << std::endl;
 
+    // Lire registre 1 (Motor Current)
+    status = motor.readInputRegisters(1, 1, &value);
+
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Vitesse actuel = " << value << std::endl;
+    else
+        std::cout << "Erreur lecture " << status << std::endl;
     return 0;
 }
