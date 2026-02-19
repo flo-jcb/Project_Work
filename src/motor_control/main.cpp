@@ -1,5 +1,7 @@
 #include "ModbusClient.h"
 #include <iostream>
+#include <unistd.h>
+
 
 int main()
 {
@@ -66,7 +68,7 @@ int main()
         else
             std::cout << "Erreur lecture " << status << std::endl;
 
-        
+        sleep(5);
     }
 
     return 0;
