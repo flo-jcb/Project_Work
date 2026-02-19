@@ -40,6 +40,13 @@ int main()
         std::cout << "Ecriture OK" << std::endl;
     else
         std::cout << "Erreur ecriture : " << status << std::endl;
+    
+    //Lire vitesse rentrée
+    status = motor.readHoldingRegisters(1, 1, &value);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Vitesse actuel = " << value << std::endl;
+    else
+        std::cout << "Erreur lecture " << status << std::endl;
 
     // Lire registre 7 (vitesse)
     status = motor.readInputRegisters(7, 1, &value);
