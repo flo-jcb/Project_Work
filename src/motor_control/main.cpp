@@ -33,13 +33,21 @@ int main()
     else
         std::cout << "Erreur lecture " << status << std::endl;
 
-    // Ecrire registre 1 (exemple)
-    /*status = motor.writeSingleRegister(1, 100);
+    // Ecrire registre 1 (vitesse)
+    status = motor.writeSingleRegister(1,100);
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Ecriture OK" << std::endl;
     else
-        std::cout << "Erreur ecriture : " << status << std::endl;*/
+        std::cout << "Erreur ecriture : " << status << std::endl;
+
+    // Lire registre 7 (vitesse)
+    status = motor.readInputRegisters(7, 1, &value);
+
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Vitesse actuel = " << value << std::endl;
+    else
+        std::cout << "Erreur lecture " << status << std::endl;
 
     return 0;
 }
