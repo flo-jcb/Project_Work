@@ -2,6 +2,7 @@
 #include <iostream>
 #include <unistd.h>
 
+#define PI  3.14159265359
 
 int main()
 {
@@ -25,6 +26,10 @@ int main()
     ModbusClient motor(1, port); // Slave ID 1
 
     uint16_t value;
+
+    uint16_t RPM; //Revolutions/min
+
+    double w; //Angular velocity
 
     Modbus::StatusCode status;
 
@@ -56,15 +61,18 @@ int main()
         status = motor.readInputRegisters(7, 1, &value);
 
         if (Modbus::StatusIsGood(status))
-            std::cout << "Vitesse actuel = " << value << std::endl;
+            std::cout << "Vitesse reelle = " << value << std::endl;
         else
             std::cout << "Erreur lecture " << status << std::endl;
 
         // Lire registre 1 (Motor frequency)
         status = motor.readInputRegisters(4, 1, &value);
 
-        if (Modbus::StatusIsGood(status))
+        if (Modbus::StatusIsGood(status)){
             std::cout << "Fréquence actuel = " << value << std::endl;
+            RPM=value*60;
+            w=(2*PI*RPM)/60;
+        }
         else
             std::cout << "Erreur lecture " << status << std::endl;
 
