@@ -23,12 +23,16 @@ int main()
     if (!port)
     {
         std::cout << "Port creation failed" << std::endl;
+            std::cout << std::flush;
+
         return -1;
     }
 
     ModbusClient motor(1, port); // Slave ID 1
 
     std::cout << "hello" << std::endl;
+        std::cout << std::flush;
+
         
     
 
@@ -44,18 +48,28 @@ int main()
         // Lire registre 1 (courrant en dV)
         status = motor.readInputRegisters(3, 1, &value);
 
-        if (Modbus::StatusIsGood(status))
+        if (Modbus::StatusIsGood(status)){
             std::cout << "Courrant actuel = " << value << std::endl;
-        else
+                std::cout << std::flush;}
+
+        else{
             std::cout << "Erreur lecture " << status << std::endl;
+            std::cout << std::flush;
+        }
 
         // Ecrire registre 1 (vitesse)
         status = motor.writeSingleRegister(1,10);
 
-        if (Modbus::StatusIsGood(status))
-            std::cout << "Ecriture OK, vitesse 10" << std::endl;
-        else
-            std::cout << "Erreur ecriture : " << status << std::endl;
+        if (Modbus::StatusIsGood(status)){
+            std::cout << "Ecriture OK, vitesse 10" << std::endl;    
+            std::cout << std::flush;
+        }
+            
+        else{            std::cout << "Erreur ecriture : " << status << std::endl;
+
+                std::cout << std::flush;
+
+        }
         
         //Lire vitesse rentrée
         status = motor.readHoldingRegisters(1, 1, &value);
