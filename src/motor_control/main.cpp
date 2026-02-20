@@ -87,11 +87,12 @@ int main()
             std::cout << "disable  " << value << std::endl;
         else
             std::cout << "Erreur lecture " << status << std::endl;
-
-
-
-
-
+int c=0;
+while(c<41){
+    status = motor.readHoldingRegisters(c, 1, &value);
+    std::cout << "value  " << c <<" : " << value << std::endl;
+    c++;
+    }
 
 
 
