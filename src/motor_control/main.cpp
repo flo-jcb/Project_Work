@@ -25,6 +25,10 @@ int main()
 
     ModbusClient motor(1, port); // Slave ID 1
 
+        std::cout << "hello" << std::endl;
+        
+    
+
     uint16_t value;
 
     uint16_t RPM; //Revolutions/min
@@ -43,7 +47,7 @@ int main()
             std::cout << "Erreur lecture " << status << std::endl;
 
         // Ecrire registre 1 (vitesse)
-        status = motor.writeSingleRegister(1,100);
+        status = motor.writeSingleRegister(1,10);
 
         if (Modbus::StatusIsGood(status))
             std::cout << "Ecriture OK, vitesse 100" << std::endl;
