@@ -98,7 +98,7 @@ int main()
 
 
 
- status = motor.writeSingleRegister(2,0);
+ status = motor.writeSingleRegister(2,1);
 
         if (Modbus::StatusIsGood(status)){
             std::cout << "Ecriture OK" << std::endl;    
