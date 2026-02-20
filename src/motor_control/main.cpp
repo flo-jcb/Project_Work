@@ -6,8 +6,9 @@
 
 int main()
 {
-        std::cout << "hello" << std::endl;
-            std::cout << std::flush;
+    std::cout << "hello" << std::endl;
+    std::cout << std::flush;
+
     Modbus::SerialSettings settings;
 
     settings.portName = "/dev/ttyAMA0";
@@ -27,7 +28,7 @@ int main()
 
     ModbusClient motor(1, port); // Slave ID 1
 
-        std::cout << "hello" << std::endl;
+    std::cout << "hello" << std::endl;
         
     
 
@@ -52,7 +53,7 @@ int main()
         status = motor.writeSingleRegister(1,10);
 
         if (Modbus::StatusIsGood(status))
-            std::cout << "Ecriture OK, vitesse 100" << std::endl;
+            std::cout << "Ecriture OK, vitesse 10" << std::endl;
         else
             std::cout << "Erreur ecriture : " << status << std::endl;
         
