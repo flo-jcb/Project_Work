@@ -6,8 +6,8 @@
 
 int main()
 {
-            std::cout << "hello" << std::endl;
-
+        std::cout << "hello" << std::endl;
+            std::cout << std::flush;
     Modbus::SerialSettings settings;
 
     settings.portName = "/dev/ttyAMA0";
