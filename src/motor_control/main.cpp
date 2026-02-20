@@ -88,6 +88,7 @@ int main()
         else
             std::cout << "Erreur lecture " << status << std::endl;
 int c=0;
+ status = motor.writeSingleRegister(0,1);
 while(c<41){
     status = motor.readHoldingRegisters(c, 1, &value);
     std::cout << "value  " << c <<" : " << value << std::endl;
