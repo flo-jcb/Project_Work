@@ -78,6 +78,43 @@ int main()
         else
             std::cout << "Erreur lecture " << status << std::endl;
 
+
+
+
+
+ status = motor.readHoldingRegisters(2, 1, &value);
+        if (Modbus::StatusIsGood(status))
+            std::cout << "disable  " << value << std::endl;
+        else
+            std::cout << "Erreur lecture " << status << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+ status = motor.writeSingleRegister(2,0);
+
+        if (Modbus::StatusIsGood(status)){
+            std::cout << "Ecriture OK" << std::endl;    
+            std::cout << std::flush;
+        }
+            
+        else{            std::cout << "Erreur ecriture : " << status << std::endl;
+
+                std::cout << std::flush;
+
+        }
+
+
+
+
+
         // Lire registre 7 (vitesse)
         status = motor.readInputRegisters(7, 1, &value);
 
