@@ -33,30 +33,47 @@ int main()
 
     Modbus::StatusCode status;
 
-    while(1){
-        // Lire registre 1 (courrant en dV)
-        status = motor.readInputRegisters(3, 1, &value);
+    // Activer le Bus
+    motor.writeSingleRegister(0, 1);   
 
-        if (Modbus::StatusIsGood(status))
-            std::cout << "Courrant actuel = " << value << std::endl;
-        else
-            std::cout << "Erreur lecture " << status << std::endl;
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Début " << std::endl;
+    else
+        std::cout << "Erreur ecriture " << status << std::endl;
 
-        // Ecrire registre 1 (vitesse)
-        status = motor.writeSingleRegister(1,100);
+    // Verif que Disable = 0
+    motor.writeSingleRegister(2, 0);   
 
-        if (Modbus::StatusIsGood(status))
-            std::cout << "Ecriture OK, vitesse 100" << std::endl;
-        else
-            std::cout << "Erreur ecriture : " << status << std::endl;
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Début " << std::endl;
+    else
+        std::cout << "Erreur ecriture " << status << std::endl;
+
+    //Ecriture direction 1 (avant)
+    motor.writeSingleRegister(3, 1);
+
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Début " << std::endl;
+    else
+        std::cout << "Erreur ecriture " << status << std::endl;
+
+    // Ecrire registre 1 (vitesse)
+    status = motor.writeSingleRegister(1,10);
+
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Ecriture OK" << std::endl;
+    else
+        std::cout << "Erreur ecriture : " << status << std::endl;
         
-        //Lire vitesse rentrée
-        status = motor.readHoldingRegisters(1, 1, &value);
-        if (Modbus::StatusIsGood(status))
-            std::cout << "Vitesse actuel = " << value << std::endl;
-        else
-            std::cout << "Erreur lecture " << status << std::endl;
+    //Lire vitesse rentrée
+    status = motor.readHoldingRegisters(1, 1, &value);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Vitesse actuel = " << value << std::endl;
+    else
+        std::cout << "Erreur lecture " << status << std::endl;
 
+        
+    while(1){
         // Lire registre 7 (vitesse)
         status = motor.readInputRegisters(7, 1, &value);
 
