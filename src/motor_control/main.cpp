@@ -128,6 +128,20 @@ motor.readHoldingRegisters(26, 1, &accel);
 
 
 
+    // Ecrire registre 1 (vitesse)
+    status = motor.writeSingleRegister(1,300);
+
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Ecriture OK" << std::endl;
+    else
+        std::cout << "Erreur ecriture : " << status << std::endl;
+        
+    //Lire vitesse rentrée
+    status = motor.readHoldingRegisters(1, 1, &value);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Vitesse actuel = " << value << std::endl;
+    else
+        std::cout << "Erreur lecture " << status << std::endl;
 
 
 
@@ -169,20 +183,6 @@ motor.readHoldingRegisters(26, 1, &accel);
 
 
 
-    // Ecrire registre 1 (vitesse)
-    status = motor.writeSingleRegister(1,300);
-
-    if (Modbus::StatusIsGood(status))
-        std::cout << "Ecriture OK" << std::endl;
-    else
-        std::cout << "Erreur ecriture : " << status << std::endl;
-        
-    //Lire vitesse rentrée
-    status = motor.readHoldingRegisters(1, 1, &value);
-    if (Modbus::StatusIsGood(status))
-        std::cout << "Vitesse actuel = " << value << std::endl;
-    else
-        std::cout << "Erreur lecture " << status << std::endl;
 
     int c=0; 
     while(1){
