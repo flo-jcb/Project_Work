@@ -1,4 +1,4 @@
-#include "ModbusClient.h"
+/*#include "ModbusClient.h"
 #include <iostream>
 #include <unistd.h>
 
@@ -218,6 +218,102 @@ motor.readHoldingRegisters(26, 1, &accel);
         }
         c++;
     }
+
+    return 0;
+}*/
+
+
+
+
+
+
+
+#include "ModbusClient.h"
+#include <iostream>
+#include <unistd.h>
+
+#define PI 3.14159265359
+
+int main()
+{
+    // Configuration port série Modbus
+    Modbus::SerialSettings settings;
+    settings.portName = "/dev/ttyAMA0";
+    settings.baudRate = 19200;
+    settings.parity = Modbus::EvenParity;
+    settings.dataBits = 8;
+    settings.timeoutInterByte = 1000;
+
+    ModbusClientPort* port = Modbus::createClientPort(Modbus::RTU, &settings, true);
+    if (!port) {
+        std::cout << "Port creation failed" << std::endl;
+        return -1;
+    }
+
+    ModbusClient motor(1, port); // Slave ID 1
+    Modbus::StatusCode status;
+    uint16_t value;
+
+    // ----------------------------
+    // 1️⃣ Mettre Parameter 13 = 2 (Bus/Modbus mode)
+    status = motor.writeSingleRegister(33, 2);
+    if (!Modbus::StatusIsGood(status)) {
+        std::cout << "Erreur ecriture Param 13" << std::endl;
+        return -1;
+    }
+    sleep(1);
+
+    // ----------------------------
+    // 2️⃣ Configurer courant et accélération pour sécurité
+    motor.writeSingleRegister(32, 500); // courant limite test
+    motor.writeSingleRegister(26, 50);  // acceleration test
+    sleep(1);
+
+    // ----------------------------
+    // 3️⃣ Configurer direction (1 = avant)
+    motor.writeSingleRegister(3, 1);
+    sleep(0.2);
+
+    // ----------------------------
+    // 4️⃣ Écrire vitesse initiale (valeur faible pour test)
+    motor.writeSingleRegister(1, 50);  // vitesse test
+    sleep(0.2);
+
+    // ----------------------------
+    // 5️⃣ Activer bus et désactiver safety
+    motor.writeSingleRegister(0, 1); // Enable bus
+    sleep(0.2);
+    motor.writeSingleRegister(2, 0); // Disable = 0
+    sleep(0.5);
+
+    // ----------------------------
+    // 6️⃣ Lire et afficher vitesse réelle en boucle
+    int c = 0;
+    while (c < 5) {
+        status = motor.readInputRegisters(7, 1, &value); // vitesse actuelle
+        if (Modbus::StatusIsGood(status)) {
+            std::cout << "Vitesse actuel = " << value << std::endl;
+        } else {
+            std::cout << "Erreur lecture vitesse" << std::endl;
+        }
+
+        status = motor.readInputRegisters(4, 1, &value); // fréquence
+        if (Modbus::StatusIsGood(status)) {
+            double RPM = value * 60;
+            double w = 2 * PI * value;
+            std::cout << "Fréquence = " << value << " | RPM = " << RPM << " | w = " << w << std::endl;
+        }
+
+        sleep(1);
+        c++;
+    }
+
+    // ----------------------------
+    // 7️⃣ Stop moteur et désactiver bus
+    motor.writeSingleRegister(2, 1); // Disable = 1
+    sleep(0.2);
+    motor.writeSingleRegister(0, 0); // Disable bus
+    std::cout << "Moteur arrêté" << std::endl;
 
     return 0;
 }
