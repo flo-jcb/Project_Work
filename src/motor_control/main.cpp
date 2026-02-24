@@ -151,7 +151,7 @@ int main()
     else
         std::cout << "Erreur lecture " << status << std::endl;
 
-        
+    int c=0; 
     while(1){
         // Lire registre 7 (vitesse)
         status = motor.readInputRegisters(7, 1, &value);
@@ -168,19 +168,22 @@ int main()
             std::cout << "Fréquence actuel = " << value << std::endl;
             RPM=value*60;
             w=(2*PI*RPM)/60;
-            std::cout << "RPM: " << RPM << "w: " << w<< std::endl;
+            std::cout << "RPM: " << RPM << " w: " << w<< std::endl;
         }
         else
             std::cout << "Erreur lecture " << status << std::endl;
 
         sleep(10);
         // Mettre Disable = 1
-       status = motor.writeSingleRegister(2, 1);   
+       if(c==5){
+        status = motor.writeSingleRegister(2, 1);   
 
         if (Modbus::StatusIsGood(status))
             std::cout << "Fin " << std::endl;
         else
             std::cout << "Erreur ecriture " << status << std::endl;
+        }
+        c++;
     }
 
     return 0;
