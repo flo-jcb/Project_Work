@@ -86,24 +86,11 @@ std::cout << "Mode = " << mode << std::endl;
             std::cout << "Erreur verification: " << status << std::endl;
     }
     
-
-
-
-
-
-
-
-
-
-
- // 4️⃣ Vérifier que la valeur est bien appliquée
-        status = motor.readHoldingRegisters(23, 1, &value);
-        if (Modbus::StatusIsGood(status))
-            std::cout << "Parameter 3 maintenant = " << value << std::endl;
-        else
-            std::cout << "Erreur verification: " << status << std::endl;
     
-    
+    motor.writeSingleRegister(21, 1);  // Closed loop
+sleep(1);
+motor.writeSingleRegister(20, 2);  // Save EEPROM
+sleep(1);
 
 
 
@@ -125,7 +112,7 @@ std::cout << "Mode = " << mode << std::endl;
    status = motor.writeSingleRegister(0, 1);   
 
     if (Modbus::StatusIsGood(status))
-        std::cout << "Début " << std::endl;
+        std::cout << "Bus ok " << std::endl;
     else
         std::cout << "Erreur ecriture " << status << std::endl;
 
@@ -133,15 +120,15 @@ std::cout << "Mode = " << mode << std::endl;
    status = motor.writeSingleRegister(2, 0);   
 
     if (Modbus::StatusIsGood(status))
-        std::cout << "Début " << std::endl;
+        std::cout << "Disable desac " << std::endl;
     else
         std::cout << "Erreur ecriture " << status << std::endl;
 
     //Ecriture direction 1 (avant)
-    status =motor.writeSingleRegister(3, 0);
+    status =motor.writeSingleRegister(3, 1);
 
     if (Modbus::StatusIsGood(status))
-        std::cout << "Début " << std::endl;
+        std::cout << "Dir ok " << std::endl;
     else
         std::cout << "Erreur ecriture " << status << std::endl;
 
@@ -150,26 +137,10 @@ std::cout << "Mode = " << mode << std::endl;
 
 
 
-// Ecrire registre 1 (vitesse)
-    status = motor.writeSingleRegister(23,4);
 
-    if (Modbus::StatusIsGood(status))
-        std::cout << "Ecriture OK 1500rpm" << std::endl;
-    else
-        std::cout << "Erreur ecriture : " << status << std::endl;
-
-
-
-
-
-
-
-
-
-    sleep(10);
 
     // Ecrire registre 1 (vitesse)
-  /*  status = motor.writeSingleRegister(1,600);
+    status = motor.writeSingleRegister(1,600);
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Ecriture OK" << std::endl;
@@ -181,7 +152,7 @@ std::cout << "Mode = " << mode << std::endl;
     if (Modbus::StatusIsGood(status))
         std::cout << "Vitesse actuel = " << value << std::endl;
     else
-        std::cout << "Erreur lecture " << status << std::endl;*/
+        std::cout << "Erreur lecture " << status << std::endl;
 
     int c=0; 
     while(1){
@@ -199,7 +170,7 @@ std::cout << "Mode = " << mode << std::endl;
         if (Modbus::StatusIsGood(status)){
             std::cout << "Fréquence actuel = " << value << std::endl;
             RPM=value*60;
-            w=(2*PI*RPM)/60;
+            w=2*PI*value;
             std::cout << "RPM: " << RPM << " w: " << w<< std::endl;
         }
         else
