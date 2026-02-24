@@ -175,7 +175,7 @@ std::cout << "Mode = " << mode << std::endl;
         else
             std::cout << "Erreur lecture " << status << std::endl;
 
-        sleep(10);
+        sleep(3);
         // Mettre Disable = 1
        if(c==5){
         status = motor.writeSingleRegister(2, 1);   
