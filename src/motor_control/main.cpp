@@ -94,6 +94,13 @@ int main()
             std::cout << "Erreur lecture " << status << std::endl;
 
         sleep(5);
+        // Mettre Disable = 1
+        motor.writeSingleRegister(2, 1);   
+
+        if (Modbus::StatusIsGood(status))
+            std::cout << "Fin " << std::endl;
+        else
+            std::cout << "Erreur ecriture " << status << std::endl;
     }
 
     return 0;
