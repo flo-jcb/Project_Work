@@ -138,6 +138,29 @@ std::cout << "Mode = " << mode << std::endl;
     else
         std::cout << "Erreur ecriture " << status << std::endl;
 
+
+
+
+
+
+// Ecrire registre 1 (vitesse)
+    status = motor.writeSingleRegister(23,4);
+
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Ecriture OK 1500rpm" << std::endl;
+    else
+        std::cout << "Erreur ecriture : " << status << std::endl;
+
+
+
+
+
+
+
+
+
+
+
     // Ecrire registre 1 (vitesse)
     status = motor.writeSingleRegister(1,999);
 
