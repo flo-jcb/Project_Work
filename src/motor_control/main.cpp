@@ -109,6 +109,13 @@ sleep(1);
             std::cout << "Erreur verification: " << status << std::endl;
 
 
+status = motor.writeSingleRegister(26, 100);  // 100 ms ou 0.1 s selon unité
+if (!Modbus::StatusIsGood(status))
+    std::cout << "Erreur écriture Acceleration" << std::endl;
+
+// Sauvegarde EEPROM
+motor.writeSingleRegister(20, 2);
+sleep(1);
 
 uint16_t accel;
 motor.readHoldingRegisters(26, 1, &accel);
@@ -163,7 +170,7 @@ motor.readHoldingRegisters(26, 1, &accel);
 
 
     // Ecrire registre 1 (vitesse)
-    status = motor.writeSingleRegister(1,600);
+    status = motor.writeSingleRegister(1,300);
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Ecriture OK" << std::endl;
