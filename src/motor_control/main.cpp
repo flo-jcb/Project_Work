@@ -254,59 +254,69 @@ int main()
 
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
-    status = motor.writeSingleRegister(33, 2);
-    if (!Modbus::StatusIsGood(status)) {
-        std::cout << "Erreur ecriture Param 13" << std::endl;
-        return -1;
-    }
+    motor.writeSingleRegister(33, 2);
     sleep(1);
 
     // ----------------------------
-    // 3️⃣ Courant et acceleration
-    motor.writeSingleRegister(32, 800); // courant limite test
-    motor.writeSingleRegister(26, 100); // acceleration test
+    // 3️⃣ Courant et acceleration élevés pour démarrage
+    motor.writeSingleRegister(32, 1000); // courant limite
+    motor.writeSingleRegister(26, 200);  // acceleration
     sleep(1);
 
     // ----------------------------
-    // 4️⃣ Activer bus et désactiver safety avant vitesse
+    // 4️⃣ Mode Closed Loop (reg 21)
+    motor.writeSingleRegister(21, 1);
+    sleep(0.5);
+
+    // ----------------------------
+    // 5️⃣ Activer bus et désactiver safety
     motor.writeSingleRegister(0, 1); // Enable bus
     sleep(0.2);
     motor.writeSingleRegister(2, 0); // Disable = 0
     sleep(0.5);
 
     // ----------------------------
-    // 5️⃣ Choisir direction (1 = avant)
+    // 6️⃣ Choisir direction (1 = avant)
     motor.writeSingleRegister(3, 1);
     sleep(0.2);
 
     // ----------------------------
-    // 6️⃣ Écrire vitesse initiale (valeur test suffisante pour démarrer)
-    motor.writeSingleRegister(1, 300); // ajuster selon doc EM-347B
+    // 7️⃣ Écrire vitesse initiale (suffisante pour démarrage)
+    motor.writeSingleRegister(1, 600); // Ajuster selon doc EM-347B
     sleep(0.5);
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
 
     // ----------------------------
-    // 7️⃣ Monitoring vitesse et fréquence
+    // 8️⃣ Monitoring vitesse, fréquence et courant
     for (int c = 0; c < 10; c++) {
-        status = motor.readInputRegisters(7, 1, &value); // vitesse actuelle
-        if (Modbus::StatusIsGood(status)) {
+        // Vitesse actuelle (si disponible)
+        status = motor.readInputRegisters(7, 1, &value);
+        if (Modbus::StatusIsGood(status))
             std::cout << "Vitesse actuel = " << value << std::endl;
-        } else {
+        else
             std::cout << "Erreur lecture vitesse" << std::endl;
-        }
 
-        status = motor.readInputRegisters(4, 1, &value); // fréquence
+        // Fréquence moteur
+        status = motor.readInputRegisters(4, 1, &value);
         if (Modbus::StatusIsGood(status)) {
             double RPM = value * 60;
             double w = 2 * PI * value;
             std::cout << "Fréquence = " << value << " | RPM = " << RPM << " | w = " << w << std::endl;
         }
+
+        // Courant moteur
+        status = motor.readInputRegisters(5, 1, &value);
+        if (Modbus::StatusIsGood(status))
+            std::cout << "Courant moteur = " << value << std::endl;
+        else
+            std::cout << "Erreur lecture courant" << std::endl;
+
         sleep(1);
     }
 
     // ----------------------------
-    // 8️⃣ Stop moteur et désactiver bus
+    // 9️⃣ Stop moteur et désactiver bus
     motor.writeSingleRegister(2, 1); // Disable = 1
     sleep(0.2);
     motor.writeSingleRegister(0, 0); // Disable bus
@@ -314,3 +324,4 @@ int main()
 
     return 0;
 }
+
