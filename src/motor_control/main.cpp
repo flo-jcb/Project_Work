@@ -40,7 +40,9 @@ int main()
 
 
 
-
+uint16_t mode;
+status = motor.readHoldingRegisters(21, 1, &mode); // 40022 -> index 21
+std::cout << "Mode = " << mode << std::endl;
 
 // 1️⃣ Lire Parameter 13
     status = motor.readHoldingRegisters(33, 1, &value);
