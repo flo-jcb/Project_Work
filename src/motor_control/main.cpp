@@ -51,37 +51,39 @@ int main()
         std::cout << "Erreur lecture param 13: " << status << std::endl;
         return -1;
     }
+    if( value!= 2){
+        // 2️⃣ Mettre Parameter 13 = 2 (mode Bus)
+        status = motor.writeSingleRegister(33, 2);
+        if (Modbus::StatusIsGood(status))
+            std::cout << "Parameter 13 mis a 2 (Bus mode)" << std::endl;
+        else
+        {
+            std::cout << "Erreur ecriture param 13: " << status << std::endl;
+            return -1;
+        }
 
-    // 2️⃣ Mettre Parameter 13 = 2 (mode Bus)
-    status = motor.writeSingleRegister(33, 2);
-    if (Modbus::StatusIsGood(status))
-        std::cout << "Parameter 13 mis a 2 (Bus mode)" << std::endl;
-    else
-    {
-        std::cout << "Erreur ecriture param 13: " << status << std::endl;
-        return -1;
+        sleep(1);
+
+        // 3️⃣ Sauvegarder dans EEPROM (Parameter Update = 2)
+        status = motor.writeSingleRegister(20, 2);
+        if (Modbus::StatusIsGood(status))
+            std::cout << "Parametres sauvegardes en EEPROM" << std::endl;
+        else
+        {
+            std::cout << "Erreur sauvegarde: " << status << std::endl;
+            return -1;
+        }
+
+        sleep(1);
+
+        // 4️⃣ Vérifier que la valeur est bien appliquée
+        status = motor.readHoldingRegisters(33, 1, &value);
+        if (Modbus::StatusIsGood(status))
+            std::cout << "Parameter 13 maintenant = " << value << std::endl;
+        else
+            std::cout << "Erreur verification: " << status << std::endl;
     }
-
-    sleep(1);
-
-    // 3️⃣ Sauvegarder dans EEPROM (Parameter Update = 2)
-    status = motor.writeSingleRegister(20, 2);
-    if (Modbus::StatusIsGood(status))
-        std::cout << "Parametres sauvegardes en EEPROM" << std::endl;
-    else
-    {
-        std::cout << "Erreur sauvegarde: " << status << std::endl;
-        return -1;
-    }
-
-    sleep(1);
-
-    // 4️⃣ Vérifier que la valeur est bien appliquée
-    status = motor.readHoldingRegisters(33, 1, &value);
-    if (Modbus::StatusIsGood(status))
-        std::cout << "Parameter 13 maintenant = " << value << std::endl;
-    else
-        std::cout << "Erreur verification: " << status << std::endl;
+    
 
 
 
@@ -166,6 +168,7 @@ int main()
             std::cout << "Fréquence actuel = " << value << std::endl;
             RPM=value*60;
             w=(2*PI*RPM)/60;
+            std::cout << "RPM: " << RPM << "w: " << w<< std::endl;
         }
         else
             std::cout << "Erreur lecture " << status << std::endl;
