@@ -33,6 +33,83 @@ int main()
 
     Modbus::StatusCode status;
 
+
+
+
+
+
+    
+
+
+
+// 1️⃣ Lire Parameter 13
+    status = motor.readHoldingRegisters(33, 1, &value);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Parameter 13 actuel = " << value << std::endl;
+    else
+    {
+        std::cout << "Erreur lecture param 13: " << status << std::endl;
+        return -1;
+    }
+
+    // 2️⃣ Mettre Parameter 13 = 2 (mode Bus)
+    status = motor.writeSingleRegister(33, 2);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Parameter 13 mis a 2 (Bus mode)" << std::endl;
+    else
+    {
+        std::cout << "Erreur ecriture param 13: " << status << std::endl;
+        return -1;
+    }
+
+    sleep(1);
+
+    // 3️⃣ Sauvegarder dans EEPROM (Parameter Update = 2)
+    status = motor.writeSingleRegister(20, 2);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Parametres sauvegardes en EEPROM" << std::endl;
+    else
+    {
+        std::cout << "Erreur sauvegarde: " << status << std::endl;
+        return -1;
+    }
+
+    sleep(1);
+
+    // 4️⃣ Vérifier que la valeur est bien appliquée
+    status = motor.readHoldingRegisters(33, 1, &value);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Parameter 13 maintenant = " << value << std::endl;
+    else
+        std::cout << "Erreur verification: " << status << std::endl;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     // Activer le Bus
    status = motor.writeSingleRegister(0, 1);   
 
