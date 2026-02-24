@@ -87,21 +87,35 @@ std::cout << "Mode = " << mode << std::endl;
     }
     
     
-    motor.writeSingleRegister(21, 1);  // Closed loop
+    status=motor.writeSingleRegister(21, 1);  // Closed loop
+    if (Modbus::StatusIsGood(status))
+            std::cout << "Parameter 13 maintenant = " << std::endl;
+        else
+            std::cout << "Erreur verification: " << status << std::endl;
 sleep(1);
-motor.writeSingleRegister(20, 2);  // Save EEPROM
+    status=motor.writeSingleRegister(20, 2);  // Save EEPROM
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Parameter 13 maintenant = " << std::endl;
+    else
+        std::cout << "Erreur verification: " << status << std::endl;
 sleep(1);
 
 
-uint16_t currentLimit;
-motor.readHoldingRegisters(32, 1, &currentLimit);
-std::cout << "Current limit = " << currentLimit << std::endl;
+    uint16_t currentLimit;
+    motor.readHoldingRegisters(32, 1, &currentLimit);
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Current limit = " << currentLimit << std::endl;
+    else
+            std::cout << "Erreur verification: " << status << std::endl;
 
 
 
 uint16_t accel;
 motor.readHoldingRegisters(26, 1, &accel);
-std::cout << "Acceleration = " << accel << std::endl;
+    if (Modbus::StatusIsGood(status))
+        std::cout << "Acceleration = " << accel << std::endl;
+    else
+        std::cout << "Erreur verification: " << status << std::endl;
 
 
 
