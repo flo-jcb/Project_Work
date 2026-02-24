@@ -225,9 +225,6 @@ motor.readHoldingRegisters(26, 1, &accel);
 
 
 
-
-
-
 #include "ModbusClient.h"
 #include <iostream>
 #include <unistd.h>
@@ -236,7 +233,8 @@ motor.readHoldingRegisters(26, 1, &accel);
 
 int main()
 {
-    // Configuration port série Modbus
+    // ----------------------------
+    // 1️⃣ Config port série Modbus
     Modbus::SerialSettings settings;
     settings.portName = "/dev/ttyAMA0";
     settings.baudRate = 19200;
@@ -255,7 +253,7 @@ int main()
     uint16_t value;
 
     // ----------------------------
-    // 1️⃣ Mettre Parameter 13 = 2 (Bus/Modbus mode)
+    // 2️⃣ Mode Bus (Parameter 13)
     status = motor.writeSingleRegister(33, 2);
     if (!Modbus::StatusIsGood(status)) {
         std::cout << "Erreur ecriture Param 13" << std::endl;
@@ -264,32 +262,33 @@ int main()
     sleep(1);
 
     // ----------------------------
-    // 2️⃣ Configurer courant et accélération pour sécurité
-    motor.writeSingleRegister(32, 500); // courant limite test
-    motor.writeSingleRegister(26, 50);  // acceleration test
+    // 3️⃣ Courant et acceleration
+    motor.writeSingleRegister(32, 800); // courant limite test
+    motor.writeSingleRegister(26, 100); // acceleration test
     sleep(1);
 
     // ----------------------------
-    // 3️⃣ Configurer direction (1 = avant)
-    motor.writeSingleRegister(3, 1);
-    sleep(0.2);
-
-    // ----------------------------
-    // 4️⃣ Écrire vitesse initiale (valeur faible pour test)
-    motor.writeSingleRegister(1, 50);  // vitesse test
-    sleep(0.2);
-
-    // ----------------------------
-    // 5️⃣ Activer bus et désactiver safety
+    // 4️⃣ Activer bus et désactiver safety avant vitesse
     motor.writeSingleRegister(0, 1); // Enable bus
     sleep(0.2);
     motor.writeSingleRegister(2, 0); // Disable = 0
     sleep(0.5);
 
     // ----------------------------
-    // 6️⃣ Lire et afficher vitesse réelle en boucle
-    int c = 0;
-    while (c < 5) {
+    // 5️⃣ Choisir direction (1 = avant)
+    motor.writeSingleRegister(3, 1);
+    sleep(0.2);
+
+    // ----------------------------
+    // 6️⃣ Écrire vitesse initiale (valeur test suffisante pour démarrer)
+    motor.writeSingleRegister(1, 300); // ajuster selon doc EM-347B
+    sleep(0.5);
+
+    std::cout << "Moteur démarré, monitoring..." << std::endl;
+
+    // ----------------------------
+    // 7️⃣ Monitoring vitesse et fréquence
+    for (int c = 0; c < 10; c++) {
         status = motor.readInputRegisters(7, 1, &value); // vitesse actuelle
         if (Modbus::StatusIsGood(status)) {
             std::cout << "Vitesse actuel = " << value << std::endl;
@@ -303,13 +302,11 @@ int main()
             double w = 2 * PI * value;
             std::cout << "Fréquence = " << value << " | RPM = " << RPM << " | w = " << w << std::endl;
         }
-
         sleep(1);
-        c++;
     }
 
     // ----------------------------
-    // 7️⃣ Stop moteur et désactiver bus
+    // 8️⃣ Stop moteur et désactiver bus
     motor.writeSingleRegister(2, 1); // Disable = 1
     sleep(0.2);
     motor.writeSingleRegister(0, 0); // Disable bus
