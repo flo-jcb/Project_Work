@@ -97,9 +97,9 @@ std::cout << "Mode = " << mode << std::endl;
 
 
  // 4️⃣ Vérifier que la valeur est bien appliquée
-        status = motor.readHoldingRegisters(31, 1, &value);
+        status = motor.readHoldingRegisters(23, 1, &value);
         if (Modbus::StatusIsGood(status))
-            std::cout << "Parameter 11 maintenant = " << value << std::endl;
+            std::cout << "Parameter 3 maintenant = " << value << std::endl;
         else
             std::cout << "Erreur verification: " << status << std::endl;
     
