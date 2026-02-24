@@ -169,7 +169,7 @@ std::cout << "Mode = " << mode << std::endl;
     sleep(10);
 
     // Ecrire registre 1 (vitesse)
-    status = motor.writeSingleRegister(1,600);
+  /*  status = motor.writeSingleRegister(1,600);
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Ecriture OK" << std::endl;
@@ -181,7 +181,7 @@ std::cout << "Mode = " << mode << std::endl;
     if (Modbus::StatusIsGood(status))
         std::cout << "Vitesse actuel = " << value << std::endl;
     else
-        std::cout << "Erreur lecture " << status << std::endl;
+        std::cout << "Erreur lecture " << status << std::endl;*/
 
     int c=0; 
     while(1){
