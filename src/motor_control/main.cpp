@@ -258,9 +258,9 @@ int main()
     sleep(1);
 
     // ----------------------------
-    // 3️⃣ Courant et acceleration élevés pour démarrage
-    motor.writeSingleRegister(32, 1000); // courant limite
-    motor.writeSingleRegister(26, 200);  // acceleration
+    // 3️⃣ Courant et acceleration élevés
+    motor.writeSingleRegister(32, 1000); // courant max
+    motor.writeSingleRegister(26, 200);  // acceleration max
     sleep(1);
 
     // ----------------------------
@@ -281,28 +281,23 @@ int main()
     sleep(0.2);
 
     // ----------------------------
-    // 7️⃣ Écrire vitesse initiale (suffisante pour démarrage)
-    motor.writeSingleRegister(1, 600); // Ajuster selon doc EM-347B
+    // 7️⃣ Écrire vitesse nominale maximale pour test
+    motor.writeSingleRegister(1, 1000); // vitesse max (ajuster selon doc EM-347B)
     sleep(0.5);
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
 
     // ----------------------------
-    // 8️⃣ Monitoring vitesse, fréquence et courant
+    // 8️⃣ Monitoring fréquence et courant moteur
     for (int c = 0; c < 10; c++) {
-        // Vitesse actuelle (si disponible)
-        status = motor.readInputRegisters(7, 1, &value);
-        if (Modbus::StatusIsGood(status))
-            std::cout << "Vitesse actuel = " << value << std::endl;
-        else
-            std::cout << "Erreur lecture vitesse" << std::endl;
-
         // Fréquence moteur
         status = motor.readInputRegisters(4, 1, &value);
         if (Modbus::StatusIsGood(status)) {
             double RPM = value * 60;
             double w = 2 * PI * value;
             std::cout << "Fréquence = " << value << " | RPM = " << RPM << " | w = " << w << std::endl;
+        } else {
+            std::cout << "Erreur lecture fréquence" << std::endl;
         }
 
         // Courant moteur
@@ -324,4 +319,5 @@ int main()
 
     return 0;
 }
+
 
