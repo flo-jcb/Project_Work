@@ -130,7 +130,7 @@ std::cout << "Mode = " << mode << std::endl;
         std::cout << "Erreur ecriture " << status << std::endl;
 
     // Verif que Disable = 0
-   /*status = motor.writeSingleRegister(2, 0);   
+   status = motor.writeSingleRegister(2, 0);   
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Début " << std::endl;
@@ -143,7 +143,7 @@ std::cout << "Mode = " << mode << std::endl;
     if (Modbus::StatusIsGood(status))
         std::cout << "Début " << std::endl;
     else
-        std::cout << "Erreur ecriture " << status << std::endl;*/
+        std::cout << "Erreur ecriture " << status << std::endl;
 
 
 
