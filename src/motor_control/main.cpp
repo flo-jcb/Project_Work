@@ -93,6 +93,15 @@ motor.writeSingleRegister(20, 2);  // Save EEPROM
 sleep(1);
 
 
+uint16_t currentLimit;
+motor.readHoldingRegisters(32, 1, &currentLimit);
+std::cout << "Current limit = " << currentLimit << std::endl;
+
+
+
+uint16_t accel;
+motor.readHoldingRegisters(26, 1, &accel);
+std::cout << "Acceleration = " << accel << std::endl;
 
 
 
