@@ -166,7 +166,7 @@ std::cout << "Mode = " << mode << std::endl;
 
 
 
-
+    sleep(10);
 
     // Ecrire registre 1 (vitesse)
     status = motor.writeSingleRegister(1,600);
