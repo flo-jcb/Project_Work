@@ -34,7 +34,7 @@ int main()
     Modbus::StatusCode status;
 
     // Activer le Bus
-    motor.writeSingleRegister(0, 1);   
+   status = motor.writeSingleRegister(0, 1);   
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Début " << std::endl;
@@ -42,7 +42,7 @@ int main()
         std::cout << "Erreur ecriture " << status << std::endl;
 
     // Verif que Disable = 0
-    motor.writeSingleRegister(2, 0);   
+   status = motor.writeSingleRegister(2, 0);   
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Début " << std::endl;
@@ -50,7 +50,7 @@ int main()
         std::cout << "Erreur ecriture " << status << std::endl;
 
     //Ecriture direction 1 (avant)
-    motor.writeSingleRegister(3, 1);
+    status =motor.writeSingleRegister(3, 1);
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Début " << std::endl;
@@ -95,7 +95,7 @@ int main()
 
         sleep(5);
         // Mettre Disable = 1
-        motor.writeSingleRegister(2, 1);   
+       status = motor.writeSingleRegister(2, 1);   
 
         if (Modbus::StatusIsGood(status))
             std::cout << "Fin " << std::endl;
