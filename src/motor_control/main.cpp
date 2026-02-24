@@ -139,7 +139,7 @@ std::cout << "Mode = " << mode << std::endl;
         std::cout << "Erreur ecriture " << status << std::endl;
 
     // Ecrire registre 1 (vitesse)
-    status = motor.writeSingleRegister(1,500);
+    status = motor.writeSingleRegister(1,999);
 
     if (Modbus::StatusIsGood(status))
         std::cout << "Ecriture OK" << std::endl;
