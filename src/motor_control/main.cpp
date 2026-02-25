@@ -259,7 +259,7 @@ int main()
 
     // ----------------------------
     // 3️⃣ Courant et acceleration élevés
-    motor.writeSingleRegister(32, 1000); // courant max
+    motor.writeSingleRegister(32, 500); // courant max
     motor.writeSingleRegister(26, 200);  // acceleration max
     sleep(1);
 
@@ -286,7 +286,7 @@ int main()
     sleep(0.5);
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
-
+    int c;
     // ----------------------------
     // 8️⃣ Monitoring fréquence et courant moteur
     for (int c = 0; c < 10; c++) {
@@ -308,6 +308,15 @@ int main()
             std::cout << "Erreur lecture courant" << std::endl;
 
         sleep(1);
+        c=0;
+        while (c!=43){
+            status = motor.readInputRegisters(c, 1, &value);
+            if (Modbus::StatusIsGood(status))
+                std::cout << "Valeur du param" << c <<" = "<< value << std::endl;
+            else
+                std::cout << "Erreur lecture courant" << std::endl;
+            c++;
+        }
     }
 
     // ----------------------------
