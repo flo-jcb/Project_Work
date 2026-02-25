@@ -286,7 +286,7 @@ int main()
     sleep(0.5);
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
-    int c;
+    int nb;
     // ----------------------------
     // 8️⃣ Monitoring fréquence et courant moteur
     for (int c = 0; c < 10; c++) {
@@ -308,14 +308,14 @@ int main()
             std::cout << "Erreur lecture courant" << std::endl;
 
         sleep(1);
-        c=0;
-        while (c!=43){
-            status = motor.readInputRegisters(c, 1, &value);
+        nb=0;
+        while (nb!=43){
+            status = motor.readInputRegisters(nb, 1, &value);
             if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param" << c <<" = "<< value << std::endl;
+                std::cout << "Valeur du param" << nb <<" = "<< value << std::endl;
             else
                 std::cout << "Erreur lecture courant" << std::endl;
-            c++;
+            nb++;
         }
     }
 
