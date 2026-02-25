@@ -289,7 +289,8 @@ int main()
     motor.writeSingleRegister(25, 0); // av=20
     sleep(0.5);
 
-
+  motor.writeSingleRegister(34, 3); // av=20
+    sleep(0.5);
 
 
 
@@ -323,8 +324,16 @@ int main()
             std::cout << "Erreur lecture " << std::endl;
 
         sleep(1);
-
         
+        /*nb=0;
+        while (nb!=43){
+            status = motor.readHoldingRegisters(, 1, &value);
+            if (Modbus::StatusIsGood(status))
+                std::cout << "Valeur du param" << nb <<" = "<< value << std::endl;
+            else
+                std::cout << "Erreur lecture courant" << std::endl;
+            nb++;
+        }*/
     }
 
     // ----------------------------
