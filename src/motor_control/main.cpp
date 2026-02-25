@@ -310,7 +310,7 @@ int main()
         sleep(1);
         nb=0;
         while (nb!=43){
-            status = motor.readInputRegisters(nb, 1, &value);
+            status = motor.readHoldingRegisters(nb, 1, &value);
             if (Modbus::StatusIsGood(status))
                 std::cout << "Valeur du param" << nb <<" = "<< value << std::endl;
             else
