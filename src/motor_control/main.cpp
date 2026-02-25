@@ -315,7 +315,7 @@ int main()
         else
             std::cout << "Erreur lecture courant" << std::endl;
 
-            // Courant moteur
+        // Courant moteur
         status = motor.readInputRegisters(3, 1, &value);
         if (Modbus::StatusIsGood(status))
             std::cout << "Voltage = " << value << std::endl;
