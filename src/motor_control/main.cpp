@@ -285,6 +285,14 @@ int main()
     motor.writeSingleRegister(1, 1000); // vitesse max (ajuster selon doc EM-347B)
     sleep(0.5);
 
+
+    motor.writeSingleRegister(25, 0); // av=20
+    sleep(0.5);
+
+
+
+
+
     std::cout << "Moteur démarré, monitoring..." << std::endl;
     int nb;
     // ----------------------------
