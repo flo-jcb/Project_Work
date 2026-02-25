@@ -323,6 +323,7 @@ int main()
             std::cout << "Erreur lecture " << std::endl;
 
         sleep(1);
+        
         /*nb=0;
         while (nb!=43){
             status = motor.readHoldingRegisters(nb, 1, &value);
