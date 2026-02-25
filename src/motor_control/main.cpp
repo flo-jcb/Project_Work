@@ -289,7 +289,7 @@ int main()
     motor.writeSingleRegister(25, 0); // av=20
     sleep(0.5);
 
-  motor.writeSingleRegister(34, 3); // av=20
+  motor.writeSingleRegister(34, 3); // av=0
     sleep(0.5);
 
 
