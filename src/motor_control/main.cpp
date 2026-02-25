@@ -323,7 +323,7 @@ int main()
             std::cout << "Erreur lecture " << std::endl;
 
         sleep(1);
-        nb=0;
+        /*nb=0;
         while (nb!=43){
             status = motor.readHoldingRegisters(nb, 1, &value);
             if (Modbus::StatusIsGood(status))
@@ -331,7 +331,7 @@ int main()
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
-        }
+        }*/
     }
 
     // ----------------------------
