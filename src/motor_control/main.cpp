@@ -259,7 +259,7 @@ int main()
 
     // ----------------------------
     // 3️⃣ Courant et acceleration élevés
-    motor.writeSingleRegister(32, 500); // courant max
+    motor.writeSingleRegister(32, 40); // courant max
     motor.writeSingleRegister(26, 200);  // acceleration max
     sleep(1);
 
@@ -334,7 +334,7 @@ int main()
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
         }*/
-    
+    motor.writeSingleRegister(32, 40); 
     int nb;
         nb=0;
         while (nb!=43){
