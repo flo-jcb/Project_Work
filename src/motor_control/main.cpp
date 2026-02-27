@@ -251,7 +251,7 @@ int main()
     ModbusClient motor(1, port); // Slave ID 1
     Modbus::StatusCode status;
     uint16_t value;
-
+/*
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
     motor.writeSingleRegister(33, 2);
@@ -291,14 +291,14 @@ int main()
 
     //motor.writeSingleRegister(34, 3); // av=0
     //sleep(0.5);
-
+*/
 
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
     int nb;
     // ----------------------------
     // 8️⃣ Monitoring fréquence et courant moteur
-    for (int c = 0; c < 3; c++) {
+    /*for (int c = 0; c < 3; c++) {
         // Fréquence moteur
         status = motor.readInputRegisters(4, 1, &value);
         if (Modbus::StatusIsGood(status)) {
@@ -324,12 +324,13 @@ int main()
             std::cout << "Erreur lecture " << std::endl;
 
         sleep(1);
-
+        */
+       while(1){
         nb=0;
         while (nb!=43){
             status = motor.readHoldingRegisters(nb, 1, &value);
             if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param" << nb <<" = "<< value << std::endl;
+                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
@@ -339,19 +340,21 @@ int main()
         while (nb!=16){
             status = motor.readInputRegisters(nb, 1, &value);
             if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param" << nb <<" = "<< value << std::endl;
+                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
         }
-    }
+        sleep(1);
+     }
+    
 
     // ----------------------------
     // 9️⃣ Stop moteur et désactiver bus
-    motor.writeSingleRegister(2, 1); // Disable = 1
+    /*motor.writeSingleRegister(2, 1); // Disable = 1
     sleep(0.2);
     motor.writeSingleRegister(0, 0); // Disable bus
-    std::cout << "Moteur arrêté" << std::endl;
+    std::cout << "Moteur arrêté" << std::endl;*/
 
     return 0;
 }
