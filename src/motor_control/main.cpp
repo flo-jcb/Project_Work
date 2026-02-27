@@ -281,16 +281,16 @@ int main()
     sleep(0.2);
 
     // ----------------------------
-    // 7️⃣ Écrire vitesse nominale maximale pour test
-    motor.writeSingleRegister(1, 1000); // vitesse max (ajuster selon doc EM-347B)
+    // 7️⃣ Écrire vitesse pour test
+    motor.writeSingleRegister(1, 300); // vitesse max (ajuster selon doc EM-347B)
     sleep(0.5);
 
 
-    motor.writeSingleRegister(25, 0); // av=20
-    sleep(0.5);
+    //motor.writeSingleRegister(25, 0); // av=20
+    //sleep(0.5);
 
-    motor.writeSingleRegister(34, 3); // av=0
-    sleep(0.5);
+    //motor.writeSingleRegister(34, 3); // av=0
+    //sleep(0.5);
 
 
 
@@ -334,7 +334,7 @@ int main()
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
         }
-
+        sleep(1);
         nb=0;
         while (nb!=16){
             status = motor.readInputRegisters(nb, 1, &value);
