@@ -251,7 +251,7 @@ int main()
     ModbusClient motor(1, port); // Slave ID 1
     Modbus::StatusCode status;
     uint16_t value;
-/*
+
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
     motor.writeSingleRegister(33, 2);
@@ -259,13 +259,13 @@ int main()
 
     // ----------------------------
     // 3️⃣ Courant et acceleration élevés
-    motor.writeSingleRegister(32, 40); // courant max
+    //motor.writeSingleRegister(32, 40); // courant max
     //motor.writeSingleRegister(26, 200);  // acceleration max
     sleep(1);
 
     // ----------------------------
     // 4️⃣ Mode Closed Loop (reg 21)
-    motor.writeSingleRegister(21, 1);
+    //motor.writeSingleRegister(21, 1);
     sleep(0.5);
 
     // ----------------------------
@@ -291,14 +291,15 @@ int main()
 
     //motor.writeSingleRegister(34, 3); // av=0
     //sleep(0.5);
-*/
+
 
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
     int nb;
     // ----------------------------
     // 8️⃣ Monitoring fréquence et courant moteur
-    /*for (int c = 0; c < 3; c++) {
+    //for (int c = 0; c < 3; c++) {
+        while(1){
         // Fréquence moteur
         status = motor.readInputRegisters(4, 1, &value);
         if (Modbus::StatusIsGood(status)) {
@@ -324,8 +325,8 @@ int main()
             std::cout << "Erreur lecture " << std::endl;
 
         sleep(1);
-        */
-       while(1){
+        
+       
         nb=0;
         while (nb!=4){
             status = motor.readHoldingRegisters(nb, 1, &value);
