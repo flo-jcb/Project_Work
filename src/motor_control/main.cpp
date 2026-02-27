@@ -327,6 +327,16 @@ int main()
         */
        while(1){
         nb=0;
+        while (nb!=4){
+            status = motor.readHoldingRegisters(nb, 1, &value);
+            if (Modbus::StatusIsGood(status))
+                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
+            else
+                std::cout << "Erreur lecture courant" << std::endl;
+            nb++;
+            sleep(0.5);
+        }
+        nb=21;
         while (nb!=43){
             status = motor.readHoldingRegisters(nb, 1, &value);
             if (Modbus::StatusIsGood(status))
@@ -334,6 +344,7 @@ int main()
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
+            sleep(0.5);
         }
         sleep(1);
         nb=0;
@@ -344,6 +355,7 @@ int main()
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
+            sleep(0.5);
         }
         sleep(1);
      }
