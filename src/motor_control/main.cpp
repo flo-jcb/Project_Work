@@ -254,13 +254,13 @@ int main()
 
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
-   /* motor.writeSingleRegister(33, 2);
+    motor.writeSingleRegister(33, 2);
     sleep(1);
 
     // ----------------------------
     // 3️⃣ Courant et acceleration élevés
     //motor.writeSingleRegister(32, 40); // courant max
-    //motor.writeSingleRegister(26, 200);  // acceleration max
+    motor.writeSingleRegister(26, 200);  // acceleration max
     sleep(1);
 
     // ----------------------------
@@ -292,7 +292,7 @@ int main()
     //motor.writeSingleRegister(34, 3); // av=0
     //sleep(0.5);
 
-*/
+
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
     int nb;
