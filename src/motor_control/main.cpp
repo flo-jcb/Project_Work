@@ -293,6 +293,8 @@ int main()
     //sleep(0.5);
 
 
+    motor.writeSingleRegister(20, 2);
+    sleep(1);
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
     int nb;
