@@ -254,7 +254,7 @@ int main()
 
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
-    motor.writeSingleRegister(33, 2);
+   /* motor.writeSingleRegister(33, 2);
     sleep(1);
 
     // ----------------------------
@@ -292,7 +292,7 @@ int main()
     //motor.writeSingleRegister(34, 3); // av=0
     //sleep(0.5);
 
-
+*/
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
     int nb;
@@ -364,10 +364,10 @@ int main()
 
     // ----------------------------
     // 9️⃣ Stop moteur et désactiver bus
-    /*motor.writeSingleRegister(2, 1); // Disable = 1
+    motor.writeSingleRegister(2, 1); // Disable = 1
     sleep(0.2);
     motor.writeSingleRegister(0, 0); // Disable bus
-    std::cout << "Moteur arrêté" << std::endl;*/
+    std::cout << "Moteur arrêté" << std::endl;
 
     return 0;
 }
