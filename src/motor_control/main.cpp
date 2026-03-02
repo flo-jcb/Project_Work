@@ -282,7 +282,7 @@ int main()
 
     // ----------------------------
     // 7️⃣ Écrire vitesse pour test
-    motor.writeSingleRegister(1, 100); // vitesse max (ajuster selon doc EM-347B)
+    motor.writeSingleRegister(1, 400); // vitesse max (ajuster selon doc EM-347B)
     sleep(0.5);
 
 
@@ -300,7 +300,7 @@ int main()
     int nb;
     // ----------------------------
     // 8️⃣ Monitoring fréquence et courant moteur
-    for (int c = 0; c < 3; c++) {
+    for (int c = 0; c < 2; c++) {
         //while(1){
         // Fréquence moteur
         status = motor.readInputRegisters(4, 1, &value);
