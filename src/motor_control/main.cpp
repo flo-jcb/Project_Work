@@ -300,8 +300,8 @@ int main()
     int nb;
     // ----------------------------
     // 8️⃣ Monitoring fréquence et courant moteur
-    //for (int c = 0; c < 3; c++) {
-        while(1){
+    for (int c = 0; c < 3; c++) {
+        //while(1){
         // Fréquence moteur
         status = motor.readInputRegisters(4, 1, &value);
         if (Modbus::StatusIsGood(status)) {
