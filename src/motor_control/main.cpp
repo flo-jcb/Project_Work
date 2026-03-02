@@ -282,7 +282,7 @@ int main()
 
     // ----------------------------
     // 7️⃣ Écrire vitesse pour test
-    motor.writeSingleRegister(1, 300); // vitesse max (ajuster selon doc EM-347B)
+    motor.writeSingleRegister(1, 100); // vitesse max (ajuster selon doc EM-347B)
     sleep(0.5);
 
 
