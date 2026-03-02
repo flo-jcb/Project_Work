@@ -265,7 +265,7 @@ int main()
 
     // ----------------------------
     // 4️⃣ Mode Closed Loop (reg 21)
-    //motor.writeSingleRegister(21, 1);
+    motor.writeSingleRegister(21, 1);
     sleep(0.5);
 
     // ----------------------------
