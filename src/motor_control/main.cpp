@@ -268,13 +268,7 @@ int main()
         return -1;
     }
 
-    // Connexion explicite du port avant toute communication
-    Modbus::StatusCode portStatus = port->connect();
-    if (!Modbus::StatusIsGood(portStatus)) {
-        std::cout << "Port connection failed" << std::endl;
-        return -1;
-    }
-
+   
     ModbusClient motor(3, port);  // Slave ID 3
     ModbusClient motor2(1, port); // Slave ID 1
 
