@@ -248,24 +248,11 @@ int main()
         return -1;
     }
 
-    // 1️⃣ Config port série Modbus
-    Modbus::SerialSettings settings2;
-    settings2.portName = "/dev/ttyAMA0";
-    settings2.baudRate = 19200;
-    settings2.parity = Modbus::EvenParity;
-    settings2.dataBits = 8;
-    settings2.timeoutInterByte = 1000;
-
-    ModbusClientPort* port2 = Modbus::createClientPort(Modbus::RTU, &settings2, true);
-    if (!port2) {
-        std::cout << "Port creation failed" << std::endl;
-        return -1;
-    }
 
     ModbusClient motor(3, port); // Slave ID 1
 
 
-    ModbusClient motor2(1, port2); // Slave ID 1
+    ModbusClient motor2(1, port); // Slave ID 1
 
     Modbus::StatusCode status;
     uint16_t value;
@@ -273,9 +260,12 @@ int main()
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
     motor.writeSingleRegister(33, 2);
+    std::cout << "ok" << std::endl;
+
     sleep(1);
 
     motor2.writeSingleRegister(33, 2);
+    std::cout << "ok" << std::endl;
     sleep(1);
 
     // ----------------------------
