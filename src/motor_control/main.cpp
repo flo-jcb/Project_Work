@@ -259,13 +259,10 @@ int main()
 
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
-    status=motor.writeSingleRegister(33, 2);
-    if (Modbus::StatusIsGood(status)) std::cout << "ok" << std::endl;
-
+    motor.writeSingleRegister(33, 2);
     sleep(1);
 
     motor2.writeSingleRegister(33, 2);
-    std::cout << "ok" << std::endl;
     sleep(1);
 
     // ----------------------------
@@ -299,8 +296,13 @@ int main()
     // 6️⃣ Choisir direction (1 = avant)
     motor.writeSingleRegister(3, 1);
     sleep(0.2);
-    motor2.writeSingleRegister(3, 1);
+    status=motor2.writeSingleRegister(3, 1);
     sleep(0.2);
+
+
+    if (Modbus::StatusIsGood(status)) std::cout << "ok" << std::endl;
+
+
 
     // ----------------------------
     // 7️⃣ Écrire vitesse pour test
