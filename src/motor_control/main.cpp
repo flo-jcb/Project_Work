@@ -277,12 +277,12 @@ int main()
 
     // ----------------------------
     // 6️⃣ Choisir direction (1 = avant)
-    //motor.writeSingleRegister(3, 1);
+    motor.writeSingleRegister(3, 1);
     sleep(0.2);
 
     // ----------------------------
     // 7️⃣ Écrire vitesse pour test
-    //motor.writeSingleRegister(1, 400); // vitesse max (ajuster selon doc EM-347B)
+    motor.writeSingleRegister(1, 400); // vitesse max (ajuster selon doc EM-347B)
     sleep(0.5);
 
 
