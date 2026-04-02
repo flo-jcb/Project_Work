@@ -224,12 +224,32 @@ motor.readHoldingRegisters(26, 1, &accel);
 
 
 
-
 #include "ModbusClient.h"
 #include <iostream>
 #include <unistd.h>
 
 #define PI 3.14159265359
+// Délai inter-esclave : 50ms minimum sur RS485 Modbus RTU
+#define INTER_SLAVE_DELAY_US 50000
+
+// Wrapper : écrit sur un moteur + délai RS485 avant de passer à l'autre
+static Modbus::StatusCode writeReg(ModbusClient& client, uint16_t reg, uint16_t val) {
+    Modbus::StatusCode status = client.writeSingleRegister(reg, val);
+    usleep(INTER_SLAVE_DELAY_US); // silence inter-esclave obligatoire
+    return status;
+}
+
+static Modbus::StatusCode readInput(ModbusClient& client, uint16_t reg, uint16_t count, uint16_t* val) {
+    Modbus::StatusCode status = client.readInputRegisters(reg, count, val);
+    usleep(INTER_SLAVE_DELAY_US);
+    return status;
+}
+
+static Modbus::StatusCode readHolding(ModbusClient& client, uint16_t reg, uint16_t count, uint16_t* val) {
+    Modbus::StatusCode status = client.readHoldingRegisters(reg, count, val);
+    usleep(INTER_SLAVE_DELAY_US);
+    return status;
+}
 
 int main()
 {
@@ -248,10 +268,14 @@ int main()
         return -1;
     }
 
+    // Connexion explicite du port avant toute communication
+    Modbus::StatusCode portStatus = port->connect();
+    if (!Modbus::StatusIsGood(portStatus)) {
+        std::cout << "Port connection failed" << std::endl;
+        return -1;
+    }
 
-    ModbusClient motor(3, port); // Slave ID 1
-
-
+    ModbusClient motor(3, port);  // Slave ID 3
     ModbusClient motor2(1, port); // Slave ID 1
 
     Modbus::StatusCode status;
@@ -259,74 +283,63 @@ int main()
 
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
-    motor.writeSingleRegister(33, 2);
+    writeReg(motor,  33, 2);
     sleep(1);
-
-    motor2.writeSingleRegister(33, 2);
+    writeReg(motor2, 33, 2);
     sleep(1);
 
     // ----------------------------
     // 3️⃣ Courant et acceleration élevés
-    //motor.writeSingleRegister(32, 40); // courant max
-    motor.writeSingleRegister(26, 200);  // acceleration max
+    writeReg(motor,  26, 200);
     sleep(1);
-    motor2.writeSingleRegister(26, 200);  // acceleration max
+    writeReg(motor2, 26, 200);
     sleep(1);
-
 
     // ----------------------------
     // 4️⃣ Mode Closed Loop (reg 21)
-    motor.writeSingleRegister(21, 1);
+    writeReg(motor,  21, 1);
     sleep(0.5);
-    motor2.writeSingleRegister(21, 1);
+    writeReg(motor2, 21, 1);
     sleep(0.5);
 
     // ----------------------------
     // 5️⃣ Activer bus et désactiver safety
-    motor.writeSingleRegister(0, 1); // Enable bus
+    writeReg(motor,  0, 1);
     sleep(0.2);
-    motor.writeSingleRegister(2, 0); // Disable = 0
+    writeReg(motor,  2, 0);
     sleep(0.5);
-    motor2.writeSingleRegister(0, 1); // Enable bus
+    writeReg(motor2, 0, 1);
     sleep(0.2);
-    motor2.writeSingleRegister(2, 0); // Disable = 0
+    writeReg(motor2, 2, 0);
     sleep(0.5);
 
     // ----------------------------
     // 6️⃣ Choisir direction (1 = avant)
-    motor.writeSingleRegister(3, 1);
+    writeReg(motor,  3, 1);
     sleep(0.2);
-    status=motor2.writeSingleRegister(3, 1);
+    writeReg(motor2, 3, 1);
     sleep(0.2);
 
     // ----------------------------
     // 7️⃣ Écrire vitesse pour test
-    motor.writeSingleRegister(1, 400); // vitesse max (ajuster selon doc EM-347B)
+    writeReg(motor,  1, 400);
     sleep(0.5);
-    motor2.writeSingleRegister(1, 400); // vitesse max (ajuster selon doc EM-347B)
+    writeReg(motor2, 1, 400);
     sleep(0.5);
 
-
-    //motor.writeSingleRegister(25, 0); // av=20
-    //sleep(0.5);
-
-    //motor.writeSingleRegister(34, 3); // av=0
-    //sleep(0.5);
-
-    motor.writeSingleRegister(20, 2);
+    writeReg(motor,  20, 2);
     sleep(1);
-    motor2.writeSingleRegister(20, 2);
+    writeReg(motor2, 20, 2);
     sleep(1);
 
     std::cout << "Moteur démarré, monitoring..." << std::endl;
     int nb;
+
     // ----------------------------
     // 8️⃣ Monitoring fréquence et courant moteur
     for (int c = 0; c < 2; c++) {
-        //while(1){
-        // Fréquence moteur
         std::cout << "Moteur 3" << std::endl;
-        status = motor.readInputRegisters(4, 1, &value);
+        status = readInput(motor, 4, 1, &value);
         if (Modbus::StatusIsGood(status)) {
             double RPM = value * 60;
             double w = 2 * PI * value;
@@ -335,62 +348,55 @@ int main()
             std::cout << "Erreur lecture fréquence" << std::endl;
         }
 
-        // Courant moteur
-        status = motor.readInputRegisters(5, 1, &value);
+        status = readInput(motor, 5, 1, &value);
         if (Modbus::StatusIsGood(status))
             std::cout << "Courant moteur = " << value << std::endl;
         else
             std::cout << "Erreur lecture courant" << std::endl;
 
-        // Courant moteur
-        status = motor.readInputRegisters(3, 1, &value);
+        status = readInput(motor, 3, 1, &value);
         if (Modbus::StatusIsGood(status))
             std::cout << "Voltage = " << value << std::endl;
         else
             std::cout << "Erreur lecture " << std::endl;
 
         sleep(1);
-        
-       
-        nb=0;
-        while (nb!=4){
-            status = motor.readHoldingRegisters(nb, 1, &value);
+
+        nb = 0;
+        while (nb != 4) {
+            status = readHolding(motor, nb, 1, &value);
             if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
+                std::cout << "Valeur du param " << nb << " = " << value << std::endl;
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
             sleep(0.5);
         }
-        nb=21;
-        while (nb!=43){
-            status = motor.readHoldingRegisters(nb, 1, &value);
+        nb = 21;
+        while (nb != 43) {
+            status = readHolding(motor, nb, 1, &value);
             if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
-            else
-                std::cout << "Erreur lecture courant" << std::endl;
-            nb++;
-            sleep(0.5);
-        }
-        sleep(1);
-        nb=0;
-        while (nb!=16){
-            status = motor.readInputRegisters(nb, 1, &value);
-            if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
+                std::cout << "Valeur du param " << nb << " = " << value << std::endl;
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
             sleep(0.5);
         }
         sleep(1);
-
-
-
-
+        nb = 0;
+        while (nb != 16) {
+            status = readInput(motor, nb, 1, &value);
+            if (Modbus::StatusIsGood(status))
+                std::cout << "Valeur du param " << nb << " = " << value << std::endl;
+            else
+                std::cout << "Erreur lecture courant" << std::endl;
+            nb++;
+            sleep(0.5);
+        }
+        sleep(1);
 
         std::cout << "Moteur 1" << std::endl;
-        status = motor2.readInputRegisters(4, 1, &value);
+        status = readInput(motor2, 4, 1, &value);
         if (Modbus::StatusIsGood(status)) {
             double RPM = value * 60;
             double w = 2 * PI * value;
@@ -399,72 +405,65 @@ int main()
             std::cout << "Erreur lecture fréquence" << std::endl;
         }
 
-        // Courant moteur
-        status = motor2.readInputRegisters(5, 1, &value);
+        status = readInput(motor2, 5, 1, &value);
         if (Modbus::StatusIsGood(status))
             std::cout << "Courant moteur = " << value << std::endl;
         else
             std::cout << "Erreur lecture courant" << std::endl;
 
-        // Courant moteur
-        status = motor2.readInputRegisters(3, 1, &value);
+        status = readInput(motor2, 3, 1, &value);
         if (Modbus::StatusIsGood(status))
             std::cout << "Voltage = " << value << std::endl;
         else
             std::cout << "Erreur lecture " << std::endl;
 
         sleep(1);
-        
-       
-        nb=0;
-        while (nb!=4){
-            status = motor2.readHoldingRegisters(nb, 1, &value);
+
+        nb = 0;
+        while (nb != 4) {
+            status = readHolding(motor2, nb, 1, &value);
             if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
+                std::cout << "Valeur du param " << nb << " = " << value << std::endl;
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
             sleep(0.5);
         }
-        nb=21;
-        while (nb!=43){
-            status = motor2.readHoldingRegisters(nb, 1, &value);
+        nb = 21;
+        while (nb != 43) {
+            status = readHolding(motor2, nb, 1, &value);
             if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
-            else
-                std::cout << "Erreur lecture courant" << std::endl;
-            nb++;
-            sleep(0.5);
-        }
-        sleep(1);
-        nb=0;
-        while (nb!=16){
-            status = motor2.readInputRegisters(nb, 1, &value);
-            if (Modbus::StatusIsGood(status))
-                std::cout << "Valeur du param " << nb <<" = "<< value << std::endl;
+                std::cout << "Valeur du param " << nb << " = " << value << std::endl;
             else
                 std::cout << "Erreur lecture courant" << std::endl;
             nb++;
             sleep(0.5);
         }
         sleep(1);
-     }
-    
+        nb = 0;
+        while (nb != 16) {
+            status = readInput(motor2, nb, 1, &value);
+            if (Modbus::StatusIsGood(status))
+                std::cout << "Valeur du param " << nb << " = " << value << std::endl;
+            else
+                std::cout << "Erreur lecture courant" << std::endl;
+            nb++;
+            sleep(0.5);
+        }
+        sleep(1);
+    }
 
     // ----------------------------
     // 9️⃣ Stop moteur et désactiver bus
-    motor.writeSingleRegister(2, 1); // Disable = 1
+    writeReg(motor,  2, 1);
     sleep(0.2);
-    motor.writeSingleRegister(0, 0); // Disable bus
+    writeReg(motor,  0, 0);
     std::cout << "Moteur arrêté" << std::endl;
 
-
-    motor2.writeSingleRegister(2, 1); // Disable = 1
+    writeReg(motor2, 2, 1);
     sleep(0.2);
-    motor2.writeSingleRegister(0, 0); // Disable bus
+    writeReg(motor2, 0, 0);
     std::cout << "Moteur arrêté 2" << std::endl;
 
     return 0;
 }
-
-
