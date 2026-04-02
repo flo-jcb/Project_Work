@@ -250,7 +250,7 @@ int main()
 
     // 1️⃣ Config port série Modbus
     Modbus::SerialSettings settings2;
-    settings2.portName = "/dev/ttyAMA10";
+    settings2.portName = "/dev/ttyAMA0";
     settings2.baudRate = 19200;
     settings2.parity = Modbus::EvenParity;
     settings2.dataBits = 8;
