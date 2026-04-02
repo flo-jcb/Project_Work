@@ -248,7 +248,7 @@ int main()
         return -1;
     }
 
-    ModbusClient motor(1, port); // Slave ID 1
+    ModbusClient motor(3, port); // Slave ID 1
     Modbus::StatusCode status;
     uint16_t value;
 
