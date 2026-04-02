@@ -259,8 +259,8 @@ int main()
 
     // ----------------------------
     // 2️⃣ Mode Bus (Parameter 13)
-    motor.writeSingleRegister(33, 2);
-    std::cout << "ok" << std::endl;
+    status=motor.writeSingleRegister(33, 2);
+    if (Modbus::StatusIsGood(status)) std::cout << "ok" << std::endl;
 
     sleep(1);
 
